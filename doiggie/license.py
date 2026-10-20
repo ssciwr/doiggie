@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional, Tuple
 import dataclasses
 import enum
 
@@ -9,7 +9,7 @@ class LicenseIdentifierScheme(enum.Enum):
     OTHER = "other"
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class LicenseIdentifier:
     scheme: LicenseIdentifierScheme
     value: str
@@ -21,16 +21,16 @@ class LicenseReferenceRole(enum.Enum):
     HOMEPAGE = "homepage"
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class LicenseReference:
     role: LicenseReferenceRole
     uri: str
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class License:
     name: str
     description: Optional[str] = None
-    identifiers: List[LicenseIdentifier] = dataclasses.field(default_factory=list)
-    references: List[LicenseReference] = dataclasses.field(default_factory=list)
+    identifiers: Tuple[LicenseIdentifier, ...] = ()
+    references: Tuple[LicenseReference, ...] = ()
     copyright: Optional[str] = None
